@@ -15,6 +15,7 @@ var Icon = {
   'quote': 'quote-left',
   'link': 'link',
   'inlineImage': 'picture-o',
+  'upload': 'upload',
   'fullScreen': 'arrows-alt',
   'sideBySide': 'columns'
 }
@@ -115,18 +116,28 @@ var CodeMirror = React.createClass({
     window.removeEventListener('resize', this._onResize)
   },
 
+  _onUpload: function (event) {
+    var file = this.refs.fileUploader.getDOMNode().files[0]
+    this.uploadImage(file)
+  },
+
   _onPaste: function (event) {
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
     if (!items.length) return
     var blob;
     for (var i = items.length - 1; i >= 0; i--) {
       if (items[i].kind == 'file'){
+        event.preventDefault();
         blob = items[i].getAsFile();
         break;
       }
     };
     if (!blob) return
 
+    this.uploadImage(blob)
+  },
+
+  uploadImage (file) {
     var settings = this.props.adminSettings
     var reader = new FileReader();
     reader.onload = (event) => {
@@ -137,11 +148,16 @@ var CodeMirror = React.createClass({
           filename = prompt(`What would you like to name the photo? All files saved as pngs. Name will be relative to ${filePath}.`, 'image.png')
         }
       }
-      api.uploadImage(event.target.result, filename).then((res) =>
-        this.cm.replaceSelection(`\n![${res.msg}](${res.src})`)
-      );
+      api.uploadImage(event.target.result, filename).then((res) => {
+        var cm = this.cm;
+        setTimeout(function () {
+          var startPoint = cm.getCursor('start');
+          var line = cm.getLine(startPoint.line);
+          cm.replaceRange(`![${line.length ? line : file.name}](${res.src})`, { line: startPoint.line, ch: 0 }, { line: startPoint.line, ch: line.length + 1 });
+        }, 1000)
+      });
     };
-    reader.readAsDataURL(blob);
+    reader.readAsDataURL(file);
   },
 
   renderToolbar () {
@@ -159,10 +175,15 @@ var CodeMirror = React.createClass({
         {this.renderButton('quote', 'q')}
         {this.renderButton('link', 'a')}
         {this.renderButton('inlineImage', 'image')}
+        {this.renderButton('upload', 'upload')}
         {this.renderButton('fullScreen', 'full-screen')}
         {this.renderButton('sideBySide', 'side-by-side')}
       </div>
     );
+  },
+
+  renderFileUploader () {
+    return <input type="file" className="editor-file-uploader" ref="fileUploader" onChange={this._onUpload}/>
   },
 
   renderButton (formatKey, label, action) {
@@ -189,11 +210,15 @@ var CodeMirror = React.createClass({
 
   toggleFormat (formatKey, e) {
     e.preventDefault();
-    format.applyFormat(this.cm, formatKey);
+    if (formatKey === 'upload') {
+      this.refs.fileUploader.getDOMNode().click()
+    } else {
+      format.applyFormat(this.cm, formatKey);      
+    }
   },
 
   render: function () {
-    return <div>{this.renderToolbar()}</div>
+    return <div>{this.renderToolbar()}{this.renderFileUploader()}</div>
   }
 })
 
