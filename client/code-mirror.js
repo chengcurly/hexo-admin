@@ -77,7 +77,7 @@ var CodeMirror = React.createClass({
 
     var editorSettings = {
       value: this.props.initialValue || '',
-      theme: 'material',
+      theme: this.props.adminSettings.darkTheme ? 'material' : 'base16-light',
       mode: 'markdown',
       lineWrapping: true,
     }

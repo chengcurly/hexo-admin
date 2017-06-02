@@ -90,11 +90,6 @@ var Editor = React.createClass({
                   onClick={this.props.onRemove} disabled>
             <i className="fa fa-trash-o" aria-hidden="true"/>
           </button>)}
-          {!this.props.isPage &&
-          <button className="editor_checkGrammar" title="Check for Writing Improvements"
-                  onClick={this.onCheckGrammar}>
-            <i className="fa fa-check-circle-o"/>
-          </button>}
       </div>
       <div className="editor_main">
         <div className="editor_edit">
@@ -110,9 +105,6 @@ var Editor = React.createClass({
             ref="rendered"
             className="editor_rendered"
             text={this.props.rendered}/>}
-          {this.state.checkingGrammar && <CheckGrammar
-            toggleGrammar={this.onCheckGrammar}
-            raw={this.props.updatedRaw} />}
         </div>
       </div>
     </div>;

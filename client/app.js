@@ -1,10 +1,23 @@
 
 var Link = require('react-router').Link
-var React = require('react')
+var React = require('react/addons')
+var cx = React.addons.classSet
+var DataFetcher = require('./data-fetcher');
+var api = require('./api');
 
 var App = React.createClass({
+  mixins: [DataFetcher((params) => {
+    return {
+      settings: api.settings()
+    }
+  })],
   render: function () {
-    return <div className="app">
+    if (!this.state.settings) return <div className='app'></div>;
+    return <div className={cx({
+        "app": true,
+        "theme-default": !this.state.settings.darkTheme,
+        "theme-dark": this.state.settings.darkTheme
+      })}>
       <div className="app_header">
         <div className="brand">
           <img src="logo.png" className="app_logo"/>

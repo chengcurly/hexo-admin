@@ -14,6 +14,14 @@ var Settings = React.createClass({
   },
 
   render: function () {
+
+    var Themes = SettingsCheckbox({
+      name: 'darkTheme',
+      enableOptions: {darkTheme: true},
+      disableOptions: {darkTheme: false},
+      label: 'Enable Dark Theme.'
+    });
+
     var LineNumbers = SettingsCheckbox({
       name: 'lineNumbers',
       enableOptions: {editor: {lineNumbers: true}},
@@ -54,10 +62,12 @@ var Settings = React.createClass({
 
     return (
       <div className="settings" style={divStyle}>
+        <h2>General</h2>
+        {Themes}
+
         <h2>Editor Settings</h2>
         {LineNumbers}
         {SpellCheck}
-        <hr />
 
         <h2>Image Pasting Settings</h2>
         <p>

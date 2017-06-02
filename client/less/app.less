@@ -11,11 +11,6 @@ html {
   font-size: 16px;
 }
 
-body {
-  overflow: auto;
-  background-color: @primaryDark;
-}
-
 /* entire app is wrapped in a div that must have height for flexbox to work */
 body > div:first-of-type {
   height: 100%;
@@ -30,18 +25,11 @@ body > div:first-of-type {
 }
 
 .app_header {
-  background-color: @primaryVeryDark;
   height: 52px;
   line-height: 52px;
-  border-bottom: 1px solid @accent1;
-
-  &, a {
-    color: @primaryDarkText;
-  }
 
   .brand {
     display: inline-block;
-    color: @accentp5;
   }
 }
 
@@ -58,29 +46,18 @@ body > div:first-of-type {
   display: inline-block;
 
   li {
-    color: @primaryDarkText;
     font-weight: bold;
     display: inline-block;
     cursor: pointer;
 
     a {
-      color: @primaryDarkText;
       outline: none;
       text-decoration: none;
       padding: 0 20px;
       display: inline-block;
-
-      &.active,
-      &:hover {
-        color: @accentp5;
-      }
     }
 
   }
-}
-
-a {
-  color: @primaryLight;
 }
 
 .app_main {

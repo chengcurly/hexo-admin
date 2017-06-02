@@ -19,7 +19,6 @@
 
   padding: 0 20px;
   box-sizing: border-box;
-  background-color: @primaryVeryDark;
   min-width: 260px;
   max-width: 260px;
   overflow-y: auto;
@@ -27,7 +26,6 @@
   li {
     position: relative;
     cursor: pointer;
-    color: @accent3;
     line-height: 32px;
     transition: background-color .3s ease;
     user-select: none;
@@ -43,7 +41,6 @@
 .directory > a {
   width: 100%;
   display: block;
-  color: @accent3;
 }
 
 .directory ul {
@@ -59,11 +56,6 @@
   }
 }
 
-.posts_post, .directory > a {
-  &:hover {
-    color: @primaryLight;
-  }
-}
 
 .posts_post-date {
   position: absolute;
@@ -77,15 +69,11 @@
 .posts_display {
   overflow-y: auto;
   flex: 1 1 auto;
-  background: @primaryDark;
 }
-
 
 .posts_title {
   padding: 30px 0;
   margin: 0 30px;
-  color: @primaryLight;
-  box-shadow: 0 1px #799eff;
   h1 {
     margin: 0;
   }
@@ -94,20 +82,9 @@
 .posts_content {
   overflow: auto;
   padding: 30px;
-
-  p {
-    color: @accentp5;
-    a {
-      color: @green;
-      text-decoration: none;
-    }
-  }
-  color: @primaryVeryLight;
 }
 
 .posts_draft-message {
-  background-color: @primaryRatherLight;
-  color: @primaryDarkText;  
   padding: 5px;
   text-align: center;
   font-style: italic;
@@ -144,8 +121,4 @@
   top: 5px;
   right: 30px;
   .icon-link;
-}
-
-.posts_post--selected {
-  color: @primaryLight !important;
 }

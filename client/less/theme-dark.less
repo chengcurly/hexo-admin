@@ -1,0 +1,176 @@
+.theme-dark {
+	@primaryDark: #2d2b55;
+	@primaryVeryDark: #232246;
+	@primaryLight: #799eff;
+	@primaryRatherLight: #DFEBFF;
+	@primaryVeryLight: #c9cbdb;
+
+	@accent: #eee;
+	@accent1: #2e2b55;
+	@accent3: #5e5b89;
+
+	@primaryDarkText: #696b98;
+	@primaryLightText: #333;
+
+
+	@green: #71fee0;
+	@red: #ff729f;
+	@yellow: #f6d27d;
+	@darkgreen: #009688;
+	@darkred: #E91E63;
+
+	&.app {
+	  background-color: @primaryDark;
+	}
+
+	.settings, .deploy {
+  	color: white;
+	}
+
+	.app_header {
+	  background-color: @primaryVeryDark;
+	  border-bottom: 1px solid @accent1;
+
+	  &, a {
+	    color: @primaryDarkText;
+	  }
+
+	  .brand {
+	    color: @accent;
+	  }
+	}
+
+	.app_nav {
+	  li {
+	    color: @primaryDarkText;
+	  }
+
+	  a {
+	    color: @primaryDarkText;
+	    &.active,
+	    &:hover {
+	      color: @accent;
+	    }
+	  }
+	}
+
+	a {
+	  color: @primaryLight;
+	}
+
+	.posts_list {
+	  background-color: @primaryVeryDark;
+	  li {
+	    color: @accent3;
+	  }
+	}
+
+	.directory > a {
+	  color: @accent3;
+	}
+
+	.posts_post, .directory > a {
+	  &:hover {
+	    color: @primaryLight;
+	  }
+	}
+
+
+	.posts_display {
+	  background: @primaryDark;
+	}
+
+	.posts_title {
+	  color: @primaryLight;
+  	box-shadow: 0 1px @primaryLight;
+	}
+
+	.posts_content {
+	  p {
+	    color: @accent;
+	    a {
+	      color: @green;
+	      text-decoration: none;
+	    }
+	  }
+	  color: @primaryVeryLight;
+	}
+
+	.posts_draft-message {
+	  background-color: @primaryRatherLight;
+	  color: @primaryDarkText;  
+	}
+
+	.posts_post--selected {
+	  color: @primaryLight !important;
+	}
+
+	.editor_title {
+	  background: @accent1;
+	  color: @primaryLight;
+	}
+
+	.pb-button {
+	  color: @primaryLight;
+	}
+
+	.editor_publish {
+	  background-color: @primaryLight;
+	}
+
+	.h-head {
+	  background-color: @primaryRatherLight;
+	  color: @primaryDarkText;
+	}
+
+	.MDEditor_toolbar {
+	  background: @primaryDark;
+	}
+	.MDEditor_toolbarButton {
+	  color: @primaryLight;
+	}
+
+	.new-post {
+	  border-bottom: 1px solid @accent1;
+	}
+
+	.new-post_button {
+	  color: @primaryLight;
+	}
+
+
+	.context-menu__item {
+		color: @primaryLight;
+		&:hover {
+			background: @primaryLight;
+		}
+	}
+
+	.config-dropper, .editor_remove {
+	  color: @primaryLight;
+	}
+
+	.config-dropper_handle {
+	  .config-dropper--open & {
+	    background-color: @primaryVeryDark;
+	  }
+	}
+
+	.config {
+	  background-color: @primaryVeryDark;
+	}
+
+	.cm-s-material.CodeMirror {
+	  background-color: @primaryDark;
+	}
+
+	.modal-footer {
+	  .btn[role="abort"] {
+	    background-color: @darkgreen;
+	  }
+	  .btn[role="confirm"] {
+	    color: white;
+	    background-color: @darkred;
+	  }
+	}
+}
