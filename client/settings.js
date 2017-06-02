@@ -54,16 +54,6 @@ var Settings = React.createClass({
 
     return (
       <div className="settings" style={divStyle}>
-        <h1>Settings</h1>
-        <p>
-          Set various settings for your admin panel and editor.
-        </p>
-        <p>
-          Hexo admin can be secured with a password.
-          {' '}<Link to='auth-setup'>Setup authentification here.</Link>
-        </p>
-        <hr />
-
         <h2>Editor Settings</h2>
         {LineNumbers}
         {SpellCheck}

@@ -6,37 +6,62 @@
 }
 
 .posts_list {
-  background-color: @primaryVeryLight;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  min-width: 400px;
-  max-width: 400px;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  & > ul {
+    padding-left: 0;
+  }
+
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: @primaryVeryDark;
+  min-width: 260px;
+  max-width: 260px;
   overflow-y: auto;
+
+  li {
+    position: relative;
+    cursor: pointer;
+    color: @accent3;
+    line-height: 32px;
+    transition: background-color .3s ease;
+    user-select: none;
+  }
+
+  i {
+    margin-right: 6px;
+    font-size: 16px;
+  }
+
 }
 
-.posts_post {
-  padding: 15px 20px;
-  color: @primaryLightText;
-  cursor: pointer;
-  position: relative;
-  transition: background-color .3s ease;
+.directory > a {
+  width: 100%;
+  display: block;
+  color: @accent3;
+}
 
+.directory ul {
+  display: none;
+}
+
+.directory.open {
+  & > ul {
+    display: block;
+  }
+  & > a .fa-angle-right {
+    transform: rotate(90deg);
+  }
+}
+
+.posts_post, .directory > a {
   &:hover {
-    background-color: @primaryMostlyLight;
-  }
-
-  &--selected {
-    background-color: @primaryRatherLight;
-
-    &:hover {
-      background-color: @primaryRatherLight;
-    }
-  }
-
-  &--draft {
-    color: #aaa;
-    font-style: italic;
+    color: @primaryLight;
   }
 }
 
@@ -52,18 +77,39 @@
 .posts_display {
   overflow-y: auto;
   flex: 1 1 auto;
+  background: @primaryDark;
+}
+
+
+.posts_title {
+  padding: 30px 0;
+  margin: 0 30px;
+  color: @primaryLight;
+  box-shadow: 0 1px #799eff;
+  h1 {
+    margin: 0;
+  }
 }
 
 .posts_content {
   overflow: auto;
   padding: 30px;
+
+  p {
+    color: @accentp5;
+    a {
+      color: @green;
+      text-decoration: none;
+    }
+  }
+  color: @primaryVeryLight;
 }
 
 .posts_draft-message {
   background-color: @primaryRatherLight;
+  color: @primaryDarkText;  
   padding: 5px;
   text-align: center;
-  color: white;
   font-style: italic;
   font-weight: bold;
   opacity: .9;
@@ -83,12 +129,12 @@
     background-color: white;
   }
 
-  .posts_post:hover & {
+  .directory>a:hover & {
     opacity: 1;
   }
 }
 
-.posts_edit-link {
+.category_edit-link {
   top: 5px;
   right: 5px;
   .icon-link;
@@ -98,4 +144,8 @@
   top: 5px;
   right: 30px;
   .icon-link;
+}
+
+.posts_post--selected {
+  color: @primaryLight !important;
 }

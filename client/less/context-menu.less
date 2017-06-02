@@ -1,0 +1,32 @@
+.context-menu {
+	display: none;
+	position: absolute;
+	z-index: 10;
+	padding: 5px 0;
+	min-width: 120px;
+	background-color: white;
+	border-radius: 2px;
+}
+
+.context-menu__active {
+	display: block;
+}
+.context-menu__items {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.context-menu__item {
+	cursor: pointer;
+	color: @primaryLight;
+	padding: 5px 10px;
+	&:hover {
+		background: @primaryLight;
+		a {
+			color: white;
+		}
+	}
+	i {
+		margin-right: 5px;
+	}
+}

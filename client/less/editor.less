@@ -1,3 +1,12 @@
+body.fullscreen {
+  .app_header, .editor_top {
+    display: none;
+  }
+  .MDEditor_toolbar {
+    width: 100%;
+    position: fixed;
+  }
+}
 
 .editor {
   display: flex;
@@ -16,8 +25,10 @@
   outline: none;
   box-sizing: border-box;
   padding: 10px 25px;
-  font-size: 34px;
+  font-size: 24px;
   font-weight: bold;
+  background: @accent1;
+  color: @primaryLight;
 
   .editor--draft & {
     font-style: italic;
@@ -31,14 +42,15 @@
   background-color: transparent;
   position: absolute;
   right: 14px;
-  top: 15px;
-  font-size: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
   cursor: pointer;
-  padding: 7px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
-  font-weight: bold;
-  opacity: .5;
+  opacity: .8;
   transition: opacity .3s ease;
+  color: @primaryLight;
 
   &:hover {
     opacity: 1;
@@ -48,9 +60,8 @@
 .editor_publish {
   .pb-button;
 
-  color: rgb(255, 213, 213);
-  background-color: rgb(218, 18, 18);
-  text-shadow: 1px 1px rgb(124, 49, 49);
+  color: white;
+  background-color: @primaryLight;
 }
 
 .editor_unpublish {
@@ -65,8 +76,6 @@
 
   padding: 8px 4px 7px 0;
   opacity: 1;
-  color: black;
-  top: 14px;
   right: 175px;
 }
 
@@ -75,8 +84,6 @@
 
   padding: 7px 5px 7px 0;
   opacity: 1;
-  color: black;
-  top: 14px;
   right: 215px;
 }
 
@@ -107,15 +114,13 @@
   }
 }
 
-@edit-back: @accent2light; //rgb(219, 213, 197);
+@edit-back: @accent2light;
 
 .editor_main {
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
   flex-direction: row;
-  padding: 5px 0 0;
-  background-color: @edit-back;
   position: relative;
 
   > div {
@@ -152,18 +157,18 @@
   display: flex;
   flex-direction: column;
   font-family: Inconsolata;
-  font-size: 18px;
+  font-size: 16px;
   min-height: 0;
-  width: 50vw;
+  width: 100%;
 }
 
 .h-head {
-  background-color: @accent2transparent;
+  background-color: @primaryRatherLight;
+  color: @primaryDarkText;
   z-index: 10;
   padding: 0 25px;
   font-size: 14px;
   font-family: Inconsolata, monospace;
-  height: 32px;
 }
 
 .editor_md-header {
@@ -181,9 +186,18 @@
 .editor_display {
   display: flex;
   flex-direction: column;
-  border-left: 5px solid @edit-back;
   font-size: 18px;
+  width: 0;
+}
+
+.editor_display-active {
   width: 50vw;
+  & + .editor_display {
+    width: 50vw;
+  }
+  .CodeMirror {
+    width: 50vw !important;
+  }
 }
 
 .editor_rendered {
@@ -193,6 +207,17 @@
   > :first-child {
     margin-top: 0;
   }
+}
+
+.CodeMirror-fullscreen {
+  background: #fff;
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  top: 38px;
+  bottom: 0;
+  height: auto;
+  z-index: 9;
 }
 
 .CodeMirror-lines {
@@ -207,22 +232,6 @@
 .CodeMirror-scroll {
   width: 100%;
   padding-left: 20px;
-}
-
-.cm-header-1 {
-  font-size: 2em;
-}
-
-.cm-header-2 {
-  font-size: 1.7em;
-}
-
-.cm-header-3 {
-  font-size: 1.5em;
-}
-
-.cm-header-4 {
-  font-size: 1.3em;
 }
 
 .grammar_box {
@@ -269,3 +278,160 @@
     }
   }
 }
+
+.editor_rendered {
+  word-break: break-word;
+  color: rgba(0,0,0,.85);
+  font-size: 16px; }
+  .editor_rendered > h1,
+  .editor_rendered .editor_rendered-title {
+    font-size: 2.375rem;
+    line-height: 3.3125rem;
+    font-weight: normal; }
+  .editor_rendered .editor_rendered-author {
+    margin: 1rem 0;
+    line-height: 1rem;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.36); 
+  }
+  .editor_rendered h2 {
+    font-weight: normal;
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+    margin: 1.875rem 0; }
+  .editor_rendered h3, .editor_rendered h4, .editor_rendered h5 {
+    font-weight: normal;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    margin: 0.9375rem 0; }
+  .editor_rendered p, .editor_rendered li {
+    line-height: 1.625rem;
+    color: rgba(0, 0, 0, 0.7); }
+  .editor_rendered p + p {
+    margin-top: 1.625rem; }
+  .editor_rendered ul {
+    list-style-type: disc;
+    margin: 0.9375rem 0;
+    padding-left: 2rem; }
+  .editor_rendered img {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    max-width: 50%; }
+  .editor_rendered blockquote {
+    margin: 1.875rem 0;
+    padding: 0.625rem 0.875rem;
+    border-left: 0.25rem solid rgba(0, 0, 0, 0.36);
+    background-color: whitesmoke; }
+    .editor_rendered blockquote p {
+      color: rgba(0, 0, 0, 0.4); }
+    .editor_rendered blockquote ul {
+      margin-top: 0.3125rem;
+      padding-left: 1.375rem; }
+      .editor_rendered blockquote ul li {
+        color: rgba(0, 0, 0, 0.36); }
+    .editor_rendered blockquote *:last-child {
+      margin-bottom: 0; }
+  .editor_rendered code {
+    padding: 0 0.25rem;
+    color: rgba(0, 0, 0, 0.4);
+    background-color: #f7f7f7; }
+  .editor_rendered a {
+    vertical-align: baseline;
+    text-decoration: underline; }
+
+@media (max-width: 767px) {
+  .editor_rendered .editor_rendered-title {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+    text-align: left; }
+  .editor_rendered .editor_rendered-author {
+    margin: 1rem 0;
+    text-align: left; }
+  .editor_rendered h2 {
+    margin: 1.25rem 0; }
+  .editor_rendered h3, .editor_rendered h4, .editor_rendered h5 {
+    margin: 0.625rem 0; }
+  .editor_rendered p + p {
+    margin-top: 1rem; }
+  .editor_rendered blockquote {
+    margin: 1rem 0; }
+  .editor_rendered img {
+    max-width: 100%; } }
+
+
+    /**
+     * Markdown Editor
+     */
+
+    @button-gutter: 4px;
+
+    .MDEditor_editor {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .MDEditor_toolbar {
+      padding: @button-gutter 20px;
+      background: @primaryDark;
+    }
+
+    .MDEditor_toolbarButton {
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-block;
+      padding: 5px;
+      margin-right: 5px;
+      text-align: center;
+      vertical-align: middle;
+      color: @primaryLight;
+
+      &:hover,
+      &:focus {
+        background-color: white;
+        outline: none;
+      }
+    }
+
+    .MDEditor_toolbarButton:active,
+    .MDEditor_toolbarButton--pressed {
+      background-color: rgba(0, 0, 0, 0.15);
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    // Button Icons
+
+    .MDEditor_toolbarButton_icon {
+      display: inline-block;
+      height: 16px;
+      width: 16px;
+
+      > svg {
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    // hide the label when there's an icon
+
+    .MDEditor_toolbarButton_label {
+      display: none;
+    }
+
+    // can't find decent icons for headings so just use text
+
+    .MDEditor_toolbarButton_label-icon {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: .9;
+      height: 16px;
+      text-transform: uppercase;
+    }
+

@@ -39,7 +39,7 @@ module.exports = function (baseUrl) {
       if (data) return post('/posts/' + id, data)
       return get('/posts/' + id)
     },
-    newPost: (title) => post('/posts/new', {title: title}),
+    newPost: (props) => post('/posts/new', props),
     pages: () => get('/pages/list'),
     page: (id, data) => {
       if (data) return post('/pages/' + id, data)

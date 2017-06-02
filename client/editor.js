@@ -98,15 +98,6 @@ var Editor = React.createClass({
       </div>
       <div className="editor_main">
         <div className="editor_edit">
-          <div className="editor_md-header">
-            {this.props.updated &&
-                <SinceWhen className="editor_updated"
-                prefix="saved "
-                time={this.props.updated}/>}
-            <span>Markdown&nbsp;&nbsp;
-              <RenameFile post={this.props.post}
-                handlePreviewLink={this.handlePreviewLink} /></span>
-          </div>
           <CodeMirror
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
@@ -115,15 +106,6 @@ var Editor = React.createClass({
             adminSettings={this.props.adminSettings} />
         </div>
         <div className="editor_display">
-          <div className="editor_display-header">
-            <span className="editor_word-count">
-              {this.props.wordCount} words
-            </span>
-            Preview
-            {' '}<a className="editor_perma-link" href={this.state.previewLink} target="_blank">
-              <i className="fa fa-link"/> {this.state.previewLink}
-            </a>
-          </div>
           {!this.state.checkingGrammar && <Rendered
             ref="rendered"
             className="editor_rendered"

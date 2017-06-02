@@ -16,6 +16,10 @@ module.exports = function (app, hexo) {
     return post
   }
 
+  function isDraft (post) {
+    return post.isDraft || post.isDiscarded
+  }
+
   function tagsCategoriesAndMetadata() {
     var cats = {}
       , tags = {}
@@ -153,6 +157,9 @@ module.exports = function (app, hexo) {
                       "source": post.source
                   };
                   addIsDraft(post_info)
+              if(isDraft(post_info)) {
+                return;
+              }
               if(post.categories.length) {
                   last_cat_id = post.categories.data.slice(-1)[0]['_id'];
                   if(!classifiedArticles[last_cat_id]) classifiedArticles[last_cat_id] = [];
@@ -315,8 +322,19 @@ module.exports = function (app, hexo) {
 
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
-   res.done(post.toArray().map(addIsDraft));
+   var allPosts = post.toArray().map(addIsDraft)
+   res.done(allPosts.filter(function (post) {
+      return !isDraft(post)
+   }));
   });
+
+  use('posts/draft', function (req, res) {
+    var post = hexo.model('Post')
+    var allPosts = post.toArray().map(addIsDraft)
+    res.done(allPosts.filter(function (post) {
+       return isDraft(post)
+    }));
+  })
 
   use('tree', function (req, res) {
     var posts = hexo.model('Post')
@@ -334,7 +352,8 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    var postParameters = {title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author};
+    var postParameters = {layout: 'draft', date: new Date(), author: hexo.config.author};
+    extend(postParameters, {title: req.body.title, categories: req.body.categories || []})
     extend(postParameters, hexo.config.metadata || {});
     hexo.post.create(postParameters)
     .error(function(err) {

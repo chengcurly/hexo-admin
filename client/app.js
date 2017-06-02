@@ -6,8 +6,10 @@ var App = React.createClass({
   render: function () {
     return <div className="app">
       <div className="app_header">
-        <img src="logo.png" className="app_logo"/>
-        <span className="app_title">UG Editor</span>
+        <div className="brand">
+          <img src="logo.png" className="app_logo"/>
+          <span className="app_title">UG Editor</span>
+        </div>
         <ul className="app_nav">
           <li><Link to="posts">Posts</Link></li>
           <li><Link to="deploy">Deploy</Link></li>

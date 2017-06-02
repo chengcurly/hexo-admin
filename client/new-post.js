@@ -5,7 +5,8 @@ var api = require('./api')
 
 var NewPost = React.createClass({
   propTypes: {
-    onNew: PT.func
+    onNew: PT.func,
+    postData: PT.object
   },
 
   getInitialState: function () {
@@ -44,7 +45,12 @@ var NewPost = React.createClass({
   _onSubmit: function (e) {
     e.preventDefault();
     this.setState({loading: true, showing: false})
-    api.newPost(this.state.text).then((post) => {
+    let props = {title: this.state.text}
+
+    if (this.props.postData) {
+      props = $.extend(props, this.props.postData)
+    }
+    api.newPost(props).then((post) => {
       this.setState({showing: false, text: 'Untitled'})
       this.props.onNew(post)
     }, (err) => {
@@ -66,7 +72,7 @@ var NewPost = React.createClass({
     if (!this.state.showing) {
       return <div className="new-post" onClick={this._onShow}>
         <div className="new-post_button">
-          <i className="fa fa-plus"/>{' '}
+          <i className="fa fa-plus"/>
           New Post
         </div>
       </div>

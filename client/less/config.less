@@ -1,8 +1,11 @@
 
 .config-dropper {
   position: absolute;
-  top: 18px;
+  top: 50%;
   right: 135px;
+  color: @primaryLight;
+  font-size: 18px;
+  margin-top: -12px;
 }
 
 .config-dropper_handle {
@@ -13,21 +16,19 @@
   cursor: pointer;
 
   .config-dropper--open & {
-    background-color: black;
+    background-color: @primaryVeryDark;
     color: white;
   }
 }
 
 .config {
   position: absolute;
-  top: 0;
   right: 30px;
   z-index: 100;
-  background-color: black;
+  background-color: @primaryVeryDark;
   padding: 10px;
   border-radius: 10px;
   border-top-right-radius: 0;
-  color: white;
   font-size: 16px;
   line-height: 16px;
   width: 200px;
