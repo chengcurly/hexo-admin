@@ -54,6 +54,7 @@ body > div:first-of-type {
   flex-direction: column;
   font-family: "Open Sans";
   height: 100%;
+  overflow: auto;
 }
 .app_header {
   height: 52px;
@@ -1381,6 +1382,7 @@ span.CodeMirror-selectedtext {
   opacity: 1;
 }
 .context-menu {
+  font-size: 14px;
   display: none;
   position: absolute;
   z-index: 10;
@@ -1401,7 +1403,8 @@ span.CodeMirror-selectedtext {
   cursor: pointer;
   padding: 5px 10px;
 }
-.context-menu__item:hover a {
+.context-menu__item:hover a,
+.context-menu__item:active a {
   color: white;
 }
 .context-menu__item i {
@@ -1552,6 +1555,13 @@ span.CodeMirror-selectedtext {
 }
 .deploy h1 {
   font-size: 2em;
+}
+.deploy .deploy_form textarea {
+  width: 100%;
+}
+.deploy .submitBtn {
+  text-align: right;
+  padding-top: 10px;
 }
 .settings {
   padding: 50px;
@@ -1816,7 +1826,8 @@ span.CodeMirror-selectedtext {
 .theme-dark .context-menu__item {
   color: #799eff;
 }
-.theme-dark .context-menu__item:hover {
+.theme-dark .context-menu__item:hover,
+.theme-dark .context-menu__item:active {
   background: #799eff;
 }
 .theme-dark .config-dropper,

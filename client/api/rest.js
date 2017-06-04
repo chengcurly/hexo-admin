@@ -45,7 +45,6 @@ module.exports = function (baseUrl) {
       if (data) return post('/pages/' + id, data)
       return get('/pages/' + id)
     },
-    deploy: (message) => post('/deploy', {message: message}),
     newPage: (title) => post('/pages/new', {title: title}),
     uploadImage: (data, filename) => post('/images/upload', {data: data, filename: filename}),
     remove: (id) => post('/posts/' + id + '/remove'),
@@ -60,6 +59,12 @@ module.exports = function (baseUrl) {
       name: name,
       value: value,
       addedOptions: addedOptions
+    }),
+    deploy: (message) => post('/deploy', {message: message}),
+    deploys: () => get('/deploy/get'),
+    setDeploy: (name, value) => post('/deploy/set', {
+      name: name,
+      value: value
     })
   }
 }

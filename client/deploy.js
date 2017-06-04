@@ -1,5 +1,6 @@
 var React = require('react')
 var api = require('./api')
+var SettingsTextbox = require('./settings-textbox')
 
 var divStyle = {
   whiteSpace: 'nowrap'
@@ -57,21 +58,39 @@ var Deploy = React.createClass({
       );
     }
 
+    var repoSetting = SettingsTextbox({
+      name: 'repo',
+      defaultValue: '',
+      label: 'repository',
+      mode: 'Deploy'
+    });
+
+    var branchSetting = SettingsTextbox({
+      name: 'branch',
+      defaultValue: '',
+      label: 'branch',
+      mode: 'Deploy'
+    });
+
     return (
       <div className="deploy" style={divStyle}>
+        <section>{repoSetting}</section>
+        <section>{branchSetting}</section>
+        <section>
         <p>
           Type a message here and hit `deploy` to run your deploy script.
         </p>
         <form className='deploy_form' onSubmit={this.handleSubmit}>
-          <input
+          <textarea
             type="text"
             className="deploy_message"
             value={this.state.message}
             placeholder="Deploy/commit message"
             onChange={e => this.setState({message: e.target.value})}
-          />
-          <input type="submit" value="Deploy" />
+          ></textarea>
+          <div className="submitBtn"><input type="submit" value="Deploy" /></div>
         </form>
+        </section>
         {body}
       </div>
     )

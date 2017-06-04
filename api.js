@@ -482,6 +482,37 @@ module.exports = function (app, hexo) {
     })
   });
 
+
+  function getConfigs() {
+    var path = hexo.base_dir + '_config.yml'
+    var configs = yml.safeLoad(fs.readFileSync(path))
+    if (!configs) return {}
+    return configs
+  }
+
+  use('deploy/set', function (req, res, next) {
+    if (req.method !== 'POST') return next()
+
+    configs = getConfigs()
+
+    // create options section if it doesn't exist, ie. first time changing settings
+
+    var name = req.body.name
+    var value = req.body.value
+
+    configs.deploy[name] = value
+
+    fs.writeFileSync(hexo.base_dir + '_config.yml', yml.safeDump(configs))
+    res.done({
+      updated: 'Successfully updated ' + name + ' = ' + value,
+      settings: {options: configs.deploy}
+    })
+  });
+
+  use('deploy/get', function (req, res) {
+    res.done({options: getConfigs().deploy})
+  });
+
   use('deploy', function(req, res, next) {
     if (req.method !== 'POST') return next()
     if (!hexo.config.admin || !hexo.config.admin.deployCommand) {

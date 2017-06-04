@@ -7,7 +7,8 @@ var SettingsTextbox = React.createClass({
   propTypes: {
     name: PT.string.isRequired,
     defaultValue: PT.string.isRequired,
-    label: PT.string.isRequired
+    label: PT.string.isRequired,
+    mode: PT.string,
   },
 
   getInitialState: function () {
@@ -19,7 +20,13 @@ var SettingsTextbox = React.createClass({
   componentDidMount: function() {
     var name = this.props.name
     var defaultValue = this.props.defaultValue
-    api.settings().then( (settings) => {
+    var requestTarget = api.settings
+
+    if (this.props.mode === 'Deploy') {
+      requestTarget = api.deploys
+    }
+
+    requestTarget().then( (settings) => {
       var value;
       if (!settings.options) {
         value = defaultValue
@@ -37,8 +44,12 @@ var SettingsTextbox = React.createClass({
   handleChange: function(e) {
     var name = this.props.name
     var value = e.target.value
-    api.setSetting(name, value).then( (result) => {
-      console.log(result.updated)
+    var requestTarget = api.setSetting
+
+    if (this.props.mode === 'Deploy') {
+      requestTarget = api.setDeploy
+    }
+    requestTarget(name, value).then( (result) => {
       this.setState({
         value: result.settings.options[name]
       });
