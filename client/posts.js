@@ -9,6 +9,7 @@ var moment = require('moment')
 var SinceWhen = require('./since-when')
 
 var NewPost = require('./new-post');
+
 var ContextMenu = require('./context-menu')
 var Rendered = require('./rendered')
 var DataFetcher = require('./data-fetcher');
@@ -98,7 +99,7 @@ var Posts = React.createClass({
               <a data-role="directory">
                 <i className="fa fa-angle-right"></i>
                 <i className="fa fa-archive"></i>
-                <span className="category_name">{category.name}</span>
+                <CateEditor key={category.id}/>
               </a>
               {this.VisitTreePosts({branch: category, categories: props.categories})}
             </li>

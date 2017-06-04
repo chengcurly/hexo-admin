@@ -36,7 +36,6 @@ var Editor = React.createClass({
   },
 
   handlePreviewLink: function(previewLink) {
-    console.log('updating preview link')
     this.setState({
       previewLink: path.join(previewLink)
     })

@@ -98,6 +98,7 @@ var Post = React.createClass({
     if (!this.state.post.isDraft) return
     api.publish(this.state.post._id).then((post) => {
       this.setState({post: post})
+      Router.transitionTo('posts')
     });
   },
 

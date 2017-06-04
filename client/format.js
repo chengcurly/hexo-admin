@@ -71,6 +71,7 @@ function applyFormat (cm, key) {
 		}
 
 		cm.setSize(editor.getBoundingClientRect().width, editor.getBoundingClientRect().height - editor.querySelector('.MDEditor_toolbar').getBoundingClientRect().height)
+		cm.focus()
 	} else {
 		var cs = getCursorState(cm);
 		var format = FORMATS[key];
