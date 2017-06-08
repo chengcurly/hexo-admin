@@ -190,6 +190,9 @@ body.fullscreen {
   width: 50vw;
   & + .editor_display {
     width: 50vw;
+    .editor_rendered {
+      display: block;
+    }
   }
   .CodeMirror {
     width: 50vw !important;
@@ -199,6 +202,7 @@ body.fullscreen {
 .editor_rendered {
   overflow-y: auto;
   padding: 40px 20px 20px;
+  display: none;
 
   > :first-child {
     margin-top: 0;

@@ -118,6 +118,27 @@ module.exports = function (app, hexo) {
     }, hexo)
   }
 
+  function renameCate(id, body, res) {
+    hexo.model('Category').updateById(id, {name: body.catename}, function (err, category) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.send(200)
+    })
+  }
+
+  function deleteCate(id, res) {
+    hexo.model('Category').removeById(id, function (err, category) {
+      if (err) {
+        return res.send(400, err);
+      }
+      var posts = hexo.model('Post')
+      var categories = hexo.model('Category')
+      var categoriesTree = listCategories(categories, posts);
+      res.done(categoriesTree)
+    })
+  }
+
   var use = function (path, fn) {
     app.use(hexo.config.root + 'admin/api/' + path, function (req, res) {
       var done = function (val) {
@@ -339,6 +360,7 @@ module.exports = function (app, hexo) {
   use('tree', function (req, res) {
     var posts = hexo.model('Post')
     var categories = hexo.model('Category')
+    console.log(categories)
     var categoriesTree = listCategories(categories, posts);
     res.done(categoriesTree)
   });
@@ -410,6 +432,21 @@ module.exports = function (app, hexo) {
         tagsCategoriesAndMetadata: tagsCategoriesAndMetadata()
       })
     }, hexo);
+  });
+
+  use('cate/', function (req, res, next) {
+    var url = req.url
+    if (url[url.length - 1] === '/') {
+      url = url.slice(0, -1)
+    }
+    var parts = url.split('/')
+    var last = parts[parts.length-1]
+    if (last === 'rename') {
+      return renameCate(parts[parts.length-2], req.body, res)
+    }
+    if (last === 'delete') {
+      return deleteCate(parts[parts.length-2], res)
+    }
   });
 
   use('images/upload', function (req, res, next) {

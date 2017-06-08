@@ -9,6 +9,7 @@ var moment = require('moment')
 var SinceWhen = require('./since-when')
 
 var NewPost = require('./new-post');
+var CateEditor = require('./cate-editor');
 
 var ContextMenu = require('./context-menu')
 var Rendered = require('./rendered')
@@ -45,6 +46,7 @@ var Posts = React.createClass({
     return {
       selected: localStorage.getItem('posts_selected'),
       postData: {},
+      editingCate: null,
       opened: null
     }
   },
@@ -60,6 +62,54 @@ var Posts = React.createClass({
     var categories = getDirectoryPath(el)
     this.setState({postData: {categories: categories}})
     this.refs.quickadd.getDOMNode().click()
+  },
+
+  _renameByContextMenu: function (id) {
+    this.setState({editingCate: id})
+  },
+
+  _deleteByContextMenu: function (id) {
+    api.deleteCate(id).then((tree) => {
+      console.log(tree)
+      this.setState({tree: tree})
+    })
+  },
+
+  _afterRename: function (props) {
+    let category = null
+    let tree = $.extend({}, this.state.tree)
+    let branch = tree
+    let id = props.id
+    while(branch.children && !category) {
+      branch.children.map((children) => {
+        if (children._id === id) {
+          category = children
+        } else {
+          branch = children
+        }  
+      })
+    }
+    if (category.name !== props.name) {
+      category.name = props.name
+      this.setState({tree: tree})
+    }
+  },
+
+  findCategoryById: function (id) {
+    let category = null
+    let branch = this.state.tree
+    while(branch.children) {
+      if (category) break;
+      branch.children.map((children) => {
+        if (children._id === id) {
+          category = branch
+        } else {
+          branch = children
+        }  
+      })
+      
+    }
+    return category || {}
   },
 
   goTo: function (id, e) {
@@ -87,19 +137,19 @@ var Posts = React.createClass({
     localStorage.setItem('posts_selected', id)
   },
 
-  VisitTreePosts: function (props) {
+  VisitTreePosts: function (props) {    
     return (
       <ul>
         {
           props.branch.children && props.branch.children.map((category, i) =>
-            <li key={category._id} className={cx({
+            <li key={category._id} data-cateid={category._id} className={cx({
                 "directory": true,
                 "open": ~this.state.opened.indexOf(category.name)
               })} onClick={this.toggleCategory.bind(null, category.name)}>
               <a data-role="directory">
                 <i className="fa fa-angle-right"></i>
                 <i className="fa fa-archive"></i>
-                <CateEditor key={category.id}/>
+                <CateEditor cateId={category._id} cateName={category.name} onRename={this._afterRename} editingCate={this.state.editingCate}/>
               </a>
               {this.VisitTreePosts({branch: category, categories: props.categories})}
             </li>
@@ -159,7 +209,7 @@ var Posts = React.createClass({
           className="posts_content"
           text={current.content}/>
       </div>
-      <ContextMenu onNew={this._createByContextMenu}/>
+      <ContextMenu onNew={this._createByContextMenu} onRename={this._renameByContextMenu} onDelete={this._deleteByContextMenu}/>
     </div>
   }
 });

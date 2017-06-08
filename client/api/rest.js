@@ -53,6 +53,10 @@ module.exports = function (baseUrl) {
     renamePost: (id, filename) => post('/posts/' + id + '/rename', {
       filename: filename
     }),
+    renameCate: (props) => post('/cate/' + props.id + '/rename', {
+      catename: props.name
+    }), 
+    deleteCate: (id) => post('/cate/' + id + '/delete'),
     tagsCategoriesAndMetadata: () => get('/tags-categories-and-metadata'),
     settings: () => get('/settings/list'),
     setSetting: (name, value, addedOptions) => post('/settings/set', {

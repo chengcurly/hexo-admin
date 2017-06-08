@@ -147,22 +147,16 @@ var ContextMenu = React.createClass({
     this._onCancel();
   },
 
-  _onNewCate: function () {
+  _onRename: function (e) {
     e.preventDefault();
-    this.props.onNew(this.state.taskItemInContext);
+    this.props.onRename(this.state.taskItemInContext.dataset.cateid);
     this._onCancel();
   },
 
-  _onDeleteCate: function () {
-
-  },
-
-  _onRename: function () {
-
-  },
-
-  _onDeletePost: function () {
-
+  _onDeleteCate: function (e) {
+    e.preventDefault();
+    this.props.onDelete(this.state.taskItemInContext.dataset.cateid);
+    this._onCancel();
   },
 
   _onCancel: function () {
@@ -183,9 +177,6 @@ var ContextMenu = React.createClass({
       <ul className="context-menu__items">
         <li className="context-menu__item" onClick={this._onNewPost}>
           <a className="context-menu__link"><i className="fa fa-plus"></i>New Post</a>
-        </li>
-        <li className="context-menu__item" onClick={this._onNewCate}>
-          <a className="context-menu__link"><i className="fa fa-plus-square"></i>New Category</a>
         </li>
         {this.state.isDirectory &&
         [<li className="context-menu__item" onClick={this._onDeleteCate}>

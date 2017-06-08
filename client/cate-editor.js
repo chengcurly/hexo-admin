@@ -5,23 +5,31 @@ var api = require('./api')
 
 var NewPost = React.createClass({
   propTypes: {
-    onNew: PT.func,
-    postData: PT.object
+    onRename: PT.func,
+    cateId: PT.string,
+    cateName: PT.string,
+    editingCate: PT.string
   },
 
   getInitialState: function () {
     return {
       editing: false,
-      text: 'Untitled'
+      text: this.props.cateName
     }
   },
 
   componentDidUpdate: function (prevProps, prevState) {
-    if (this.state.showing && !prevState.showing) {
+    if (this.state.editing && !prevState.editing) {
       var node = this.refs.input.getDOMNode()
       node.focus()
       node.selectionStart = 0
       node.selectionEnd = node.value.length
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.editingCate !== this.props.editingCate) {
+      this.setState({ editing: nextProps.editingCate === this.props.cateId })
     }
   },
 
@@ -32,28 +40,28 @@ var NewPost = React.createClass({
   },
 
   _onShow: function () {
-    this.setState({showing: true})
+    this.setState({editing: true})
   },
 
   _onBlur: function () {
-    if (this.state.showing) {
+    if (this.state.editing) {
       this._onCancel();
     }
   },
 
   _onSubmit: function (e) {
     e.preventDefault();
-    this.setState({loading: true, showing: false})
-    let props = {title: this.state.text}
-
-    if (this.props.postData) {
-      props = $.extend(props, this.props.postData)
+    this.setState({editing: false})
+    let props = {
+      id: this.props.cateId,
+      name: this.state.text
     }
-    api.newPost(props).then((post) => {
-      this.setState({editing: false, text: 'Untitled'})
-      this.props.onNew(post)
+
+    api.renameCate(props).then(() => {
+      this.setState({editing: false, text: props.name})
+      this.props.onRename(props)
     }, (err) => {
-      console.error('Failed! to make post', err)
+      console.error('Failed! to rename cate', err)
     })
   },
 
